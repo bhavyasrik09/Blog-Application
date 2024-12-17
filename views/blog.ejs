@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= post.title %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .post-content {
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .content-block {
+      overflow: hidden; /* Clear floats */
+      margin-bottom: 20px;
+    }
+
+    .content-block img {
+      float: left; /* Float the image to the left */
+      margin-right: 20px; /* Space between image and text */
+      margin-bottom: 10px;
+      width: 200px; /* Fixed width for all images */
+      height: 150px; /* Fixed height for all images */
+      object-fit: cover; /* Ensures images scale and crop proportionally */
+      border-radius: 8px;
+      background-color: #f0f0f0; /* Fallback background for images */
+    }
+
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #8E44AD;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .back-btn {
+      background-color: #7D3C98;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="post-title"><%= post.title %></h1>
+    <div class="post-content">
+      <% post.content.forEach(function(content) { %>
+        <div class="content-block">
+          <% if (content.image) { %>
+            <img src="/<%= content.image %>" alt="Post Image">
+          <% } %>
+          <p><%= content.text %></p>
+        </div>
+      <% }); %>
+    </div>
+    <a href="/edit/<%= post.id %>" class="btn">Edit Post</a>
+    <a href="/" class="btn back-btn">Go Back to Home</a>
+  </div>
+</body>
+</html>

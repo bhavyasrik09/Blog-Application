@@ -1,0 +1,30 @@
+.blog-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .blog-section.left {
+    flex-direction: row;
+  }
+  
+  .blog-section.right {
+    flex-direction: row-reverse;
+  }
+  
+  .blog-section img {
+    width: 300px;
+    height: auto;
+    margin: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .blog-section {
+      flex-direction: column !important;
+    }
+  
+    .blog-section img {
+      width: 100%;
+    }
+  }
+  

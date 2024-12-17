@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Post</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    input[type="file"] {
+      margin-top: 5px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #8E44AD;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .back-btn {
+      background-color: #7D3C98;
+      margin-left: 10px;
+    }
+
+    #contentInputs {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Edit Post</h1>
+  <div class="container">
+    <!-- Form to edit an existing post -->
+    <form action="/edit/<%= post.id %>" method="POST" enctype="multipart/form-data">
+      <!-- Title Input -->
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" value="<%= post.title %>" required>
+
+      <!-- Paragraph and Image Inputs -->
+      <label for="numParagraphs">Number of Paragraphs:</label>
+      <input type="number" id="numParagraphs" min="1" value="<%= post.content.length %>" required>
+      <button type="button" onclick="generateInputs()" class="btn">Generate Inputs</button>
+
+      <!-- Dynamic Inputs for Paragraphs and Images -->
+      <div id="contentInputs">
+        <% post.content.forEach(function(content, index) { %>
+          <label for="para<%= index + 1 %>">Paragraph <%= index + 1 %>:</label>
+          <textarea id="para<%= index + 1 %>" name="paragraphs[]" required><%= content.text %></textarea>
+          <label for="img<%= index + 1 %>">Image <%= index + 1 %> (optional):</label>
+          <input type="file" id="img<%= index + 1 %>" name="images[]" accept="image/*">
+        <% }); %>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Save Changes</button>
+      <a href="/" class="btn back-btn">Go Back to Home</a>
+    </form>
+  </div>
+
+  <script>
+    // Function to dynamically generate paragraph and image input fields
+    function generateInputs() {
+      const numParagraphs = parseInt(document.getElementById('numParagraphs').value, 10);
+      const contentDiv = document.getElementById('contentInputs');
+      contentDiv.innerHTML = '';
+
+      for (let i = 1; i <= numParagraphs; i++) {
+        contentDiv.innerHTML += `
+          <label for="para${i}">Paragraph ${i}:</label>
+          <textarea id="para${i}" name="paragraphs[]" placeholder="Write paragraph ${i}" required></textarea>
+          <label for="img${i}">Image ${i} (optional):</label>
+          <input type="file" id="img${i}" name="images[]" accept="image/*">
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
